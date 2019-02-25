@@ -35,3 +35,14 @@ If we choose to offer different privileges to different users, we can also put r
 | get_notifications | **GET** /notifications | Gets all notification types available |
 | put_notification | **PUT** /notifications | Puts a notification based on parameters | **type**: String |
 | delete_notifications | **DELETE** /notifications/*notificationID* | Deletes a notification based on passed ID |
+
+### Image storage
+| Method | HTTP request | Description | Body parameters |
+------|------|-----|------|
+| get_img_by_album | **GET** /image/Album/*albumID* | Gets the list of all images in an album by passed ID |
+| get_img | **GET** /image/*imageID* | Gets an image by passed ID |
+| create_img | **POST** /Album/*album_id*/addPicture | Inserts an image into the DB | **image**: file <br /> **name**: String |
+| create_album | **POST** /createAlbum | Inserts an Album into the DB | **name**: String |
+| delete_album | **POST** /deleteAlbum/*albumID* | Deletes an album and its related pictures by ID | 
+| delete_img | **POST** /deleteImg/*imgageID* | Deletes an image by ID |
+
