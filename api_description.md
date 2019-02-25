@@ -9,6 +9,10 @@
 | create_conversation | **POST** /conversation | Creates a conversation | **creator_id**: int<br /> **participant_id**:int |
 | post_message | **POST** /message | Creates a message | **conversation_id**:int <br/>**sender_id**:int <br /> **text**:string |
 | delete_message | **DELETE** /message/*messageId* | Deletes a message by ID |
+
+### Users and Notifications
+| Method | HTTP request | Description | Body parameters |
+------|------|-----|------|
 | get_all_persons | **GET** /person | Gets the list of all registered users and admins |
 | get_person | **GET** /person/*personID* | Gets a person by passeed ID |
 | put_person | **PUT** /person | Inserts a person into the DB | **name**: String <br /> **email**: email <br /> **password**: String <br /> **notifications**: Boolean <br /> **notificationType**: String |
