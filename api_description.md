@@ -1,6 +1,19 @@
 # API Descriptions
 
+### Authentication
+
+| Method | HTTP request | Description | Body parameters |
+------|------|-----|------|
+| register | **POST** /user/register | Register for an account.<br>Once registered, you receive<br>an email with a verification link.<br>Username must be unique. | **firstName**: string<br>**lastName**: string<br>**email**: string<br>**username**: string<br>**password**: string
+| login | **POST** /user/login | Log in to your account.<br>You cannot log in unless verified. | **username**: string<br>**password**: string
+| verify | **POST** /user/verify?key=[key] | Verify your account.<br>The verification key is given as<br> a parameter in the URL. | N/A
+
+Once logged in, the user is provided a JSON Web Token (JWT) which authorizes them to make authenticated requests to the server.
+
+If we choose to offer different privileges to different users, we can also put roles in the claims of the token, which can be decoded for each request where we want to check its claims.
+
 ### Messages
+
 | Method | HTTP request | Description | Body parameters |
 ------|------|-----|------|
 | get_conversations | **GET** /conversation | Get all conversations | 
