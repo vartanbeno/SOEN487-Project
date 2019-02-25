@@ -18,7 +18,7 @@
 | put_person | **PUT** /person | Inserts a person into the DB | **name**: String <br /> **email**: email <br /> **password**: String <br /> **notifications**: Boolean <br /> **notificationType**: String |
 | get_all_admin | **GET** /admin | Gets a list of all admins |
 | get_admin | **GET** /admin/*adminID* | Gets an admin by passed ID |
-| delete_admin | **DELETE** /delete/*adminID* | Deletes an admin by ID |
+| delete_admin | **DELETE** /delete/admin/*adminID* | Deletes an admin by ID |
 | get_notifications | **GET** /notifications | Gets all notification types available |
 | put_notification | **PUT** /notifications | Puts a notification based on parameters | **type**: String |
 | delete_notifications | **DELETE** /notifications/*notificationID* | Deletes a notification based on passed ID |
