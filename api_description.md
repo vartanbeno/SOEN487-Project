@@ -43,6 +43,6 @@ If we choose to offer different privileges to different users, we can also put r
 | get_img | **GET** /image/*imageID* | Gets an image by passed ID |
 | create_img | **POST** /Album/*album_id*/addPicture | Inserts an image into the DB | **image**: file <br /> **name**: String |
 | create_album | **POST** /createAlbum | Inserts an Album into the DB | **name**: String |
-| delete_album | **POST** /deleteAlbum/*albumID* | Deletes an album and its related pictures by ID | 
-| delete_img | **POST** /deleteImg/*imgageID* | Deletes an image by ID |
+| delete_album | **DELETE** /deleteAlbum/*albumID* | Deletes an album and its related pictures by ID | 
+| delete_img | **DELETE** /deleteImg/*imgageID* | Deletes an image by ID |
 
