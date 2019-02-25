@@ -37,12 +37,11 @@ If we choose to offer different privileges to different users, we can also put r
 | delete_notifications | **DELETE** /notifications/*notificationID* | Deletes a notification based on passed ID |
 
 ### Image storage
-| Method | HTTP request | Description | Body parameters |
+| Method | URL | Description | Body parameters |
 ------|------|-----|------|
-| get_img_by_album | **GET** /image/Album/*albumID* | Gets the list of all images in an album by passed ID |
-| get_img | **GET** /image/*imageID* | Gets an image by passed ID |
-| create_img | **POST** /Album/*album_id*/addPicture | Inserts an image into the DB | **image**: file <br /> **name**: String |
-| create_album | **POST** /createAlbum | Inserts an Album into the DB | **name**: String |
-| delete_album | **DELETE** /deleteAlbum/*albumID* | Deletes an album and its related pictures by ID | 
-| delete_img | **DELETE** /deleteImg/*imgageID* | Deletes an image by ID |
-
+| **GET** | /album/image/1 | Gets the list of all images in an album with ID 1 |
+| **GET** | /image/1 | Gets the image with ID of 1 |
+| **POST** | /album/1/addPicture | Inserts an image into the db associated with Album ID 1 | **image**: file <br /> **name**: String |
+| **POST** | /album | Inserts an Album into the DB | **name**: String |
+| **DELETE** | /album/1 | Deletes an album with ID 1 and all related pictures | 
+| **DELETE** | /image/1 | Deletes the image with ID 1 |
