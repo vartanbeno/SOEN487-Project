@@ -37,11 +37,14 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <button onClick={this.handleLogin}> Login </button>
-          {this.state.loginClicked ?
-          <Login /> :
-          null}
-          <button onClick={this.handleRegister}> Register </button>
+          {(this.state.loginClicked || this.state.registerClicked) ? null : 
+          <div>
+            <button onClick={this.handleLogin}> Login </button>
+            <br />
+            <button onClick={this.handleRegister}> Register </button>
+          </div>
+          }
+          {this.state.loginClicked ? <Login /> : null}
           {this.state.registerClicked ? <Register /> : null}
         </header>
       </div>
