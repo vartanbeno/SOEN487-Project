@@ -31,6 +31,9 @@ class User(db.Model):
         if self.username is None or not 4 <= len(self.username) <= 30:
             raise ModelValidationException("A user's username must be between 4 and 30 characters.")
 
+    def is_verified(self):
+        return self.verification is None
+
     def json(self):
         """
         Using custom methods instead of row2dict because we don't want to return a user's password to the client (even
