@@ -49,7 +49,7 @@ class User(db.Model):
 
 class Verification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    key = db.Column(db.String, nullable=False)
+    key = db.Column(db.String, unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
