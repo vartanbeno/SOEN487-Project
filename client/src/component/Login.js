@@ -46,9 +46,33 @@ class Login extends Component {
     }
 
     postLogin(){
-        
-        console.log('insert nice query')
 
+        fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password
+            })
+      })
+      .then(response => response.json())
+      .then(data => data.token)
+      .then(token => this.saveToken(token))
+      .catch(error => console.error("Inside login promise: " + error));
+
+    }
+
+    saveToken(token){
+
+      if (!token){
+        console.log('token undefined!');
+        alert('Incorrect Crendentials!')
+      }
+
+      console.log('the token is: '+token);
     }
 
 
