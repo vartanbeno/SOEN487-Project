@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import Login from './component/Login';
 import Register from './component/Register';
+import Verify from './component/Verify';
+import {
+  BrowserRouter,
+  Route,
+  Link
+} from 'react-router-dom'
 import './App.css';
 
 class App extends Component {
@@ -35,19 +41,23 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          {(this.state.loginClicked || this.state.registerClicked) ? null : 
-          <div>
-            <button onClick={this.handleLogin}> Login </button>
-            <br />
-            <button onClick={this.handleRegister}> Register </button>
-          </div>
-          }
-          {this.state.loginClicked ? <Login /> : null}
-          {this.state.registerClicked ? <Register /> : null}
-        </header>
-      </div>
+      <BrowserRouter>
+         <Route path="/api/auth/verify" component={Verify}/>
+      
+        <div className="App">
+          <header className="App-header">
+            {(this.state.loginClicked || this.state.registerClicked) ? null : 
+            <div>
+              <button onClick={this.handleLogin}> Login </button>
+              <br />
+              <button onClick={this.handleRegister}> Register </button>
+            </div>
+            }
+            {this.state.loginClicked ? <Login /> : null}
+            {this.state.registerClicked ? <Register /> : null}
+          </header>
+        </div>
+      </BrowserRouter>
     );
   }
 }
