@@ -4,10 +4,6 @@ class Verify extends Component {
 
     constructor(props){
 
-        super(props);
-        this.state = {
-            key: ''
-        }
     }
 
     
@@ -39,20 +35,6 @@ class Verify extends Component {
       .then(data => data.message)
       .then(message => console.log(message))
       .catch(error => console.error("Inside register promise: " + error));
-
-
-
-    }
-
-    render(){
-        return (
-
-            <div>
-                <h2>yooo</h2>
-            </div>
-            
-        );
-
 
     }
 

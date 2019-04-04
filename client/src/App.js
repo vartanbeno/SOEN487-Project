@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import Login from './component/Login';
 import Register from './component/Register';
 import Verify from './component/Verify';
+import { Button } from 'reactstrap';
 import {
   BrowserRouter,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
 import './App.css';
 
@@ -48,9 +48,11 @@ class App extends Component {
           <header className="App-header">
             {(this.state.loginClicked || this.state.registerClicked) ? null : 
             <div>
-              <button onClick={this.handleLogin}> Login </button>
+              <h1>Welcome to Team Giovanni Prattico</h1>
+              <button style={{background: 'light-blue', border: 'light-blue', width: 105, height: 50}} onClick={this.handleLogin}> Login </button>
               <br />
-              <button onClick={this.handleRegister}> Register </button>
+              <br />
+              <button style={{background: 'orange', border: 'orange', width: 105, height: 50}}onClick={this.handleRegister}> Register </button>
             </div>
             }
             {this.state.loginClicked ? <Login /> : null}
