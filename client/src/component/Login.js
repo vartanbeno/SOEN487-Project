@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
     Col, Form,
-    FormGroup, Label, Input,
-    Button,
-    Container,
+    FormGroup, Label, Input
   } from 'reactstrap';
 
 class Login extends Component {
@@ -60,19 +58,28 @@ class Login extends Component {
       })
       .then(response => response.json())
       .then(data => data.token)
-      .then(token => this.saveToken(token))
+      .then(token => this.processToken(token))
       .catch(error => console.error("Inside login promise: " + error));
+
+    }
+
+    processToken(token){
+
+      if (!token){
+        console.log('token undefined!');
+        alert('Incorrect Crendentials!')
+      } else {
+        
+        console.log('the token is: '+token);
+        this.saveToken(token);
+      }
 
     }
 
     saveToken(token){
 
-      if (!token){
-        console.log('token undefined!');
-        alert('Incorrect Crendentials!')
-      }
+      //localStorage.set('token', token);
 
-      console.log('the token is: '+token);
     }
 
 
@@ -103,7 +110,7 @@ class Login extends Component {
                         onChange={this.handleChange}
                     />
                 <br/>
-                <Button style={{textAlign: 'right',alignSelf: 'stretch'}}type="submit" value="Submit">Submit</Button>
+                <button style={{textAlign: 'right',alignSelf: 'stretch'}} type="submit" value="Submit">Submit</button>
               </FormGroup>
             </Col>
             <br/>
