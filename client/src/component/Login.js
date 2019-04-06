@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../App.css'
 import {
     Col, Form,
     FormGroup, Label, Input
@@ -72,6 +73,7 @@ class Login extends Component {
         
         console.log('the token is: '+token);
         this.saveToken(token);
+        this.props.history.push(`home`);
       }
 
     }
@@ -86,7 +88,9 @@ class Login extends Component {
     render(){
 
         return (
-            <div>
+            
+        <div className="App">
+        <header className="App-header">
             <h1>Enter your credentials to Login</h1>
             
             <Form className="form" onSubmit={this.handleSubmit}>
@@ -115,7 +119,8 @@ class Login extends Component {
             </Col>
             <br/>
             </Form>
-            </div>
+          </header>
+          </div>
             
 
 
