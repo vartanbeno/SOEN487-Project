@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../App.css';
 
 class Home extends Component{
 
@@ -6,6 +7,7 @@ class Home extends Component{
         super(props);
 
         this.checkAuthenticated();
+        this.handleLogout = this.handleLogout.bind(this);
 
     }
 
@@ -19,11 +21,21 @@ class Home extends Component{
 
     }
 
+    handleLogout(){
+
+        localStorage.removeItem('token', null)
+        this.props.history.push(`/`);
+        
+    }
+
     render(){
         return (
-            
+        <div className="App">
+            <header className="App-header">
             <h1> Microservices are awesome</h1>
-
+            <button style={{background: 'green', border: 'green', width: 105, height: 50}} onClick={this.handleLogout}> Logout </button>
+        </header>
+        </div>
         )
     }
 
