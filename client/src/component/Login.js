@@ -19,6 +19,13 @@ class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.postLogin = this.postLogin.bind(this);
+        this.handleGoBack = this.handleGoBack.bind(this);
+    }
+
+    handleGoBack(){
+
+      this.props.history.push(`/`);
+
     }
 
     handleChange(event){
@@ -118,6 +125,7 @@ class Login extends Component {
             </Col>
             <br/>
             </Form>
+            <button onClick={this.handleGoBack}> Go Back </button>
           </header>
           </div>
             

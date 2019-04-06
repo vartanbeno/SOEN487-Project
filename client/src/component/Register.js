@@ -21,6 +21,13 @@ class Register extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.postRegister = this.postRegister.bind(this);
+        this.handleGoBack = this.handleGoBack.bind(this);
+    }
+
+    handleGoBack(){
+
+        this.props.history.push(`/`);
+  
     }
 
     handleChange(event){
@@ -64,6 +71,8 @@ class Register extends Component {
       .then(response => response.json())
       .then(data => data.message)
       .then(message => console.log(message))
+      .then(alert('Verify your account by sending a POST with your key to /verify'))
+      .then(this.props.history.push(`/`))
       .catch(error => console.error("Inside register promise: " + error));
 
     }
@@ -111,7 +120,7 @@ class Register extends Component {
                 </Form>
 
 
-
+                <button onClick={this.handleGoBack}> Go Back </button>
              </header>
             </div>
 
