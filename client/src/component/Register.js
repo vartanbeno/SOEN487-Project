@@ -4,6 +4,7 @@ import {
     FormGroup, Label, Input,
     Button
   } from 'reactstrap';
+import '../App.css'
 
 class Register extends Component {
 
@@ -70,7 +71,8 @@ class Register extends Component {
     render(){
 
         return (
-            <div>
+            <div className="App">
+            <header className="App-header">
                 <h1>Register</h1>
 
                 <Form className="form" onSubmit={this.handleSubmit}>
@@ -110,7 +112,7 @@ class Register extends Component {
 
 
 
-
+             </header>
             </div>
 
 

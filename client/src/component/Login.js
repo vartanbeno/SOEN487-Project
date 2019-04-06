@@ -70,8 +70,7 @@ class Login extends Component {
         console.log('token undefined!');
         alert('Incorrect Crendentials!')
       } else {
-        
-        console.log('the token is: '+token);
+  
         this.saveToken(token);
         this.props.history.push(`home`);
       }
@@ -79,8 +78,8 @@ class Login extends Component {
     }
 
     saveToken(token){
-
-      //localStorage.set('token', token);
+      console.log('saving token to local storage');
+      localStorage.setItem('token', token);
 
     }
 

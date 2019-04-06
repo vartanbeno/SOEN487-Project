@@ -5,6 +5,18 @@ class Home extends Component{
     constructor(props){
         super(props);
 
+        this.checkAuthenticated();
+
+    }
+
+    checkAuthenticated(){
+
+        if (!localStorage.getItem('token')){
+            
+            this.props.history.push(`/`);
+        }
+            
+
     }
 
     render(){
