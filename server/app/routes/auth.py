@@ -1,4 +1,5 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
+import json
 from sqlalchemy import func
 
 from app import db
@@ -82,8 +83,13 @@ def verify():
     If it does, we delete the verification entity from the database, breaking its relationship with its user.
     :return: Response object
     """
+    print('made it to verify')
+
     key = request.args.get('key')
+
+    print('the key is '+str(key))
     verification = Verification.query.filter_by(key=key).first()
+    print(verification)
 
     if verification is not None:
         db.session.delete(verification)
