@@ -19,9 +19,9 @@ def page_not_found(e):
 
 
 @app.route('/')
-def soen487_a1():
-    return jsonify({"title": "SOEN487 Assignment 1",
-                    "student": {"id": "27316860", "name": "Giovanni Prattico"}})
+def home():
+    return jsonify({"message": "Welcome to the notification service API. There is no"
+                               " resource at this endpoint."})
 
 if __name__ == '__main__':
     models.db.init_app(app)
