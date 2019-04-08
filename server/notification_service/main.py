@@ -6,11 +6,7 @@ app = Flask(__name__)
 app.config.from_object(DevConfig)
 import models
 
-from Person.PersonAPI import personBp
-from Admin.AdminAPI import adminBp
 from Notification.NotificationTypeAPI import nBp
-app.register_blueprint(personBp)
-app.register_blueprint(adminBp)
 app.register_blueprint(nBp)
 
 @app.errorhandler(404)

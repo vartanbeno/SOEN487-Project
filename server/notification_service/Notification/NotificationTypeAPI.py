@@ -15,8 +15,6 @@ def get_all_notifications():
 def put_notification():
 
     nType = request.form.get("type")
-    #print('NTYPE IS : '+nType+' with type : ')
-    #print(type(nType))
 
     if not nType:
         return make_response(jsonify({"code": 403,"msg": "Cannot put notification type. Missing mandatory fields."}), 403)
@@ -39,7 +37,7 @@ def put_notification():
     return jsonify({"code": 200, "msg": "success"})
 
 @nBp.route("/notifications/<n_id>", methods={"DELETE"})
-def delete_admin(n_id):
+def delete_notification(n_id):
 
     nType = models.NotificationType.query.filter_by(id = n_id).first()
 
