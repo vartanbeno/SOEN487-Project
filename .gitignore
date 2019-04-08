@@ -210,3 +210,5 @@ fabric.properties
 server/authentication_service/.idea/*
 
 server/notification_service/.idea/*
+
+server/message_service/.idea/*
