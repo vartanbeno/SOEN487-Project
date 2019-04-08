@@ -206,3 +206,7 @@ fabric.properties
 
 # User specified
 *.sqlite
+
+server/authentication_service/.idea/*
+
+server/notification_service/.idea/*
