@@ -12,6 +12,7 @@ class ConversationContent extends Component {
   }
 
   componentDidMount() {
+    console.log(localStorage.getItem('token'))
 
   }
 
@@ -25,7 +26,7 @@ class ConversationContent extends Component {
         <Input placeholder="Write here"/>
         <Button>Send</Button>
         <div className="conversation-body">
-          
+
         </div>
       </div>
     )

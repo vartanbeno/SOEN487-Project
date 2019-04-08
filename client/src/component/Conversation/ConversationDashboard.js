@@ -34,14 +34,16 @@ class ConversationDashBoard extends Component {
 
     return (
       <table>
-        <tr>
-          <th><Button>New conversation</Button></th>
-        </tr>
-        {conversations.map(c =>
-          <tr>
-            <th className="conversation-item">my title</th>
+        <tbody>
+          <tr >
+            <th><Button>New conversation</Button></th>
           </tr>
-        )}
+          {conversations.map(c =>
+            <tr>
+              <th className="conversation-item">my title</th>
+            </tr>
+          )}
+        </tbody>
       </table>
     );
   }

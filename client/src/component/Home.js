@@ -27,12 +27,16 @@ class Home extends Component{
         this.props.history.push(`/`);
         
     }
+    goToConversations =() =>{
+        this.props.history.push(`/conversations`);
+    }
 
     render(){
         return (
         <div className="App">
             <header className="App-header">
             <h1> Microservices are awesome</h1>
+            <button onClick={this.goToConversations}>Go to Conversations</button>
             <button style={{background: 'green', border: 'green', width: 105, height: 50}} onClick={this.handleLogout}> Logout </button>
         </header>
         </div>
