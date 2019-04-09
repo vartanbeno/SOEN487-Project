@@ -18,7 +18,7 @@ class ConversationDashBoard extends Component {
   }
 
   getConversations = () => {
-    fetch('http://localhost:8001/conversation', {
+    fetch('http://localhost:8081/conversation', {
       method: 'GET',
       headers: {
         'Authorization': 'application/json'

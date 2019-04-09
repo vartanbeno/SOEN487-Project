@@ -8,15 +8,32 @@ class ConversationContent extends Component {
     this.state = {
       messages: [],
       count: 0,
+      conversation: null
     }
   }
 
   componentDidMount() {
-    console.log(localStorage.getItem('token'))
-
+    console.log(localStorage.getItem('token'));
   }
 
   componentWillReceiveProps() {
+
+  }
+
+  syncMessages = () => {
+    fetch('http://localhost:8081/message/', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+    })
+      .then((r) => {
+        this.setState({ conversations: r.data })
+      });
+  }
+
+  sendMessage = () => {
 
   }
 
@@ -24,9 +41,8 @@ class ConversationContent extends Component {
     return (
       <div id="conversation-content">
         <Input placeholder="Write here"/>
-        <Button>Send</Button>
+        <Button onClick={this.sendMessage}>Send</Button>
         <div className="conversation-body">
-
         </div>
       </div>
     )
