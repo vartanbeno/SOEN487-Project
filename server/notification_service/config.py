@@ -1,6 +1,10 @@
-class Config(object):
-    SQLALCHEMY_DATABASE_URI = r"sqlite:///notification_microservice.sqlite"
+import datetime
 
+
+class Config(object):
+    JWT_SECRET_KEY = 'teamgiovanniprattico'
+    JWT_EXPIRES = datetime.timedelta(days=1)
+    SQLALCHEMY_DATABASE_URI = r"sqlite:///notification_microservice.sqlite"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class ProdConfig(Config):
