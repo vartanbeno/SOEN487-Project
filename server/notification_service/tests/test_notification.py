@@ -1,9 +1,9 @@
 import unittest
 import json
 from main import app as tested_app
-from models import db as tested_db
-from config import TestConfig
-from models import Person, Admin, NotificationType
+from app.models import db as tested_db
+from app.config import TestConfig
+from app.models import NotificationType
 
 tested_app.config.from_object(TestConfig)
 
