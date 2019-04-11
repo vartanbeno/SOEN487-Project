@@ -1,6 +1,5 @@
 import sqlalchemy
 from flask import jsonify, Blueprint, make_response, request
-from flask_jwt_simple import get_jwt
 
 from app import models
 from app.helpers.jwt import must_be_authenticated
@@ -10,7 +9,6 @@ notifications_api.before_request(must_be_authenticated)
 
 @notifications_api.route("/")
 def get_all_notifications():
-    print(get_jwt())
     n_list = models.NotificationType.query.all()
     return jsonify([models.row2dict(notification) for notification in n_list])
 
