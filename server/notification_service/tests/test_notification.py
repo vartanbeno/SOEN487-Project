@@ -1,15 +1,19 @@
-import unittest
 import json
-from main import app as tested_app
-from app.models import db as tested_db
+import unittest
+
+import app as tested_app
 from app.config import TestConfig
 from app.models import NotificationType
+from app.models import db as tested_db
 
-tested_app.config.from_object(TestConfig)
+tested_app = tested_app.create_app(TestConfig)
 
 
 class TestNotification(unittest.TestCase):
     def setUp(self):
+        context = tested_app.app_context()
+        context.push()
+
         # set up the test DB
         self.db = tested_db
         self.db.create_all()

@@ -1,9 +1,10 @@
 import unittest
 import json
-from main import app as tested_app
+
+import app as tested_app
 from app.config import TestConfig
 
-tested_app.config.from_object(TestConfig)
+tested_app = tested_app.create_app(TestConfig)
 
 
 class TestApp(unittest.TestCase):
@@ -17,15 +18,4 @@ class TestApp(unittest.TestCase):
 
         # convert the response data from json and call the asserts
         body = json.loads(str(response.data, "utf8"))
-        self.assertDictEqual(body, {"code": 404, "msg": "404: Not Found"})
-
-    def test_root(self):
-        # send the request and check the response status code
-        response = self.app.get("/")
-        self.assertEqual(response.status_code, 200)
-
-        # convert the response data from json and call the asserts
-        body = json.loads(str(response.data, "utf8"))
-        self.assertEqual(body["title"], "SOEN487 Assignment 1")
-        student = body["student"]
-        self.assertDictEqual(student, {"id": "27316860", "name": "Giovanni Prattico"})
+        self.assertDictEqual(body, {"message": "Page not found."})
