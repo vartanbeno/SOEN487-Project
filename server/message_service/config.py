@@ -1,5 +1,6 @@
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = r"sqlite:///soen487a1.sqlite"
+    SQLALCHEMY_DATABASE_URI = r"sqlite:///conversations.sqlite"
+    SECRET_KEY="Noodles"
 
 
 class ProdConfig(Config):
