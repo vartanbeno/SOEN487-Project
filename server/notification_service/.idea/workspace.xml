@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e9d8ca9-9283-4b82-80a4-82b167ca5ae9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/notifications.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/notifications.py" afterDir="false" />
-    </list>
+    <list default="true" id="9e9d8ca9-9283-4b82-80a4-82b167ca5ae9" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,12 +197,12 @@
       <workItem from="1554659533454" duration="589000" />
       <workItem from="1554680331277" duration="4968000" />
       <workItem from="1555117467606" duration="883000" />
-      <workItem from="1555118379093" duration="2756000" />
+      <workItem from="1555118379093" duration="3575000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9870000" />
+    <option name="totallyTimeSpent" value="10689000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1141" height="725" extended-state="6" />
