@@ -13,20 +13,30 @@ def get_all_notifications():
     n_list = models.Notification.query.all()
     return jsonify([models.row2dict(notification) for notification in n_list])
 
+@notifications_api.route("/user/<userID>", methods={"GET"})
+def get_by_receiverID(userID):
+    messages = models.Notification.query.filter_by(receiverID = userID)
+    return jsonify([models.row2dict(notification) for notification in messages])
+
 @notifications_api.route("/", methods={"PUT"})
 def put_notification():
-    nType = request.form.get("type")
+    senderID = request.form.get('senderID')
+    print(request.get_json())
 
-    if not nType:
-        return make_response(jsonify({"code": 403,"msg": "Cannot put notification type. Missing mandatory fields."}), 403)
-    n_id = request.form.get("id")
-    if not n_id:
-        p = models.Notification(type = nType)
-    else:
-        p = models.Notification(id=n_id, type = nType)
+    receiverID = request.form.get("receiverID")
+    message = request.form.get("message")
+
+    if not senderID:
+        return make_response(jsonify({"code": 403,"msg": "Cannot put notification. Missing sender ID."}), 403)
+    if not receiverID:
+        return make_response(jsonify({"code": 403, "msg": "Cannot put notification. Missing receiver ID."}), 403)
+    if not message:
+        return make_response(jsonify({"code": 403, "msg": "Cannot put notification. Missing message."}), 403)
+
+    notification = models.Notification(senderID= senderID, receiverID= receiverID, message=message)
 
     #start insert transaction
-    models.db.session.add(p)
+    models.db.session.add(notification)
     try:
         models.db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError:
@@ -36,17 +46,17 @@ def put_notification():
 
 @notifications_api.route("/<n_id>", methods={"DELETE"})
 def delete_notification(n_id):
-    nType = models.Notification.query.filter_by(id = n_id).first()
+    notification = models.Notification.query.filter_by(id = n_id).first()
 
-    if nType:
+    if notification:
         models.Notification.query.filter_by(id=n_id).delete()
     else:
-        return make_response(jsonify({"code": 406, "msg": "This notification type ID doesn't exist"}), 406)
+        return make_response(jsonify({"code": 406, "msg": "This notification ID doesn't exist"}), 406)
 
     try:
         models.db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError as e:
-        error = "Cannot delete notification type. "
+        error = "Cannot delete notification. "
         print(app.config.get("DEBUG"))
         if app.config.get("DEBUG"):
             error += str(e)
