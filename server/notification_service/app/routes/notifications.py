@@ -1,5 +1,6 @@
 import sqlalchemy
 from flask import jsonify, Blueprint, make_response, request
+from sqlalchemy import exc
 
 from app import models
 from app.helpers.jwt import must_be_authenticated
@@ -9,7 +10,7 @@ notifications_api.before_request(must_be_authenticated)
 
 @notifications_api.route("/")
 def get_all_notifications():
-    n_list = models.NotificationType.query.all()
+    n_list = models.Notification.query.all()
     return jsonify([models.row2dict(notification) for notification in n_list])
 
 @notifications_api.route("/", methods={"PUT"})
@@ -20,9 +21,9 @@ def put_notification():
         return make_response(jsonify({"code": 403,"msg": "Cannot put notification type. Missing mandatory fields."}), 403)
     n_id = request.form.get("id")
     if not n_id:
-        p = models.NotificationType(type = nType)
+        p = models.Notification(type = nType)
     else:
-        p = models.NotificationType(id=n_id, type = nType)
+        p = models.Notification(id=n_id, type = nType)
 
     #start insert transaction
     models.db.session.add(p)
@@ -35,10 +36,10 @@ def put_notification():
 
 @notifications_api.route("/<n_id>", methods={"DELETE"})
 def delete_notification(n_id):
-    nType = models.NotificationType.query.filter_by(id = n_id).first()
+    nType = models.Notification.query.filter_by(id = n_id).first()
 
     if nType:
-        models.NotificationType.query.filter_by(id=n_id).delete()
+        models.Notification.query.filter_by(id=n_id).delete()
     else:
         return make_response(jsonify({"code": 406, "msg": "This notification type ID doesn't exist"}), 406)
 

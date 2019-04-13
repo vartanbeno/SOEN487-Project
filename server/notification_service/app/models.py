@@ -1,7 +1,9 @@
 from app import db
 
+def row2dict(row):
+    return {c.name: str(getattr(row, c.name)) for c in row.__table__.columns}
 
-class NotificationType(db.Model):
+class Notification(db.Model):
     id = db.Column(db.Integer, primary_key= True)
     senderID = db.Column(db.Integer, nullable=False)
     receiverID = db.Column(db.Integer, nullable=False)
