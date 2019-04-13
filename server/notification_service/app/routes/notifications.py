@@ -1,14 +1,18 @@
 import sqlalchemy
 from flask import jsonify, Blueprint, make_response, request
 from sqlalchemy import exc
+from flask_cors import CORS
+from flask_jwt_simple import jwt_required
 
 from app import models
 from app.helpers.jwt import must_be_authenticated
 
 notifications_api = Blueprint('notifications_api', __name__)
-notifications_api.before_request(must_be_authenticated)
+
+CORS(notifications_api)
 
 @notifications_api.route("/")
+@jwt_required
 def get_all_notifications():
     n_list = models.Notification.query.all()
     return jsonify([models.row2dict(notification) for notification in n_list])

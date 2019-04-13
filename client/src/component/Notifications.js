@@ -22,20 +22,14 @@ class Notifications extends Component{
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': localStorage.getItem('token'),
-              'Access-Control-Allow-Origin': 'http://localhost:8080/'
+              'Authorization': 'Bearer '+localStorage.getItem('token')
             }
       })
       .then(response => response.json())
-      .then(data => this.printToConsole(data))
+      .then(data => console.log(data))
       .catch(error => console.error("Inside login promise: " + error));
       console.log('clicked the button')
 
-    }
-
-    printToConsole(data){
-
-        console.log(data);
     }
 
     render(){
