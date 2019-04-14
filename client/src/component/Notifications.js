@@ -4,6 +4,11 @@ class Notifications extends Component{
     constructor(props){
         super(props);
         this.checkAuthenticated();
+
+        this.state = {
+            array: []
+        }
+        
     }
 
     checkAuthenticated(){
@@ -15,7 +20,7 @@ class Notifications extends Component{
 
     }
 
-    fetchMessages(){
+    componentDidMount(){
 
         fetch('http://localhost:8080/api/notifications/', {
             method: 'GET',
@@ -26,17 +31,22 @@ class Notifications extends Component{
             }
       })
       .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error("Inside login promise: " + error));
-      console.log('clicked the button')
-
+      .then(data => this.setState({array: data}))
     }
 
     render(){
+        const { array } = this.state;
         return (
             <div>
             <h1> You have many Notifications.</h1>
-            <button onClick={this.fetchMessages}>Fetch Messages</button>
+            <ul>
+            {array.map(array =>
+                <li key={array.id}>
+                    <p>Message from {array.senderID} to {array.receiverID}</p>
+                </li>
+                )}
+            </ul>
+
             </div>
 
     )}
