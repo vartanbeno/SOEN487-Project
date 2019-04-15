@@ -3,10 +3,10 @@ import { Component } from 'react';
 class Verify extends Component {
 
     constructor(props){
-
+        super(props);
     }
 
-    
+
     componentDidMount(){
         this.parseRequest();
     }
@@ -16,9 +16,6 @@ class Verify extends Component {
         const search = this.props.location.search;
         const params = new URLSearchParams(search);
         const verifyKey = params.get('key');
-        console.log(verifyKey);
-        //this.setState({ key: verifyKey});
-        
         this.forwardRequest(verifyKey);
     }
 
@@ -36,6 +33,10 @@ class Verify extends Component {
       .then(message => console.log(message))
       .catch(error => console.error("Inside register promise: " + error));
 
+    }
+
+    render() {
+        return null;
     }
 
 }
