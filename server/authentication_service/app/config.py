@@ -1,6 +1,10 @@
 import datetime
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv(verbose=True)
+
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 DB = os.path.join(CURRENT_DIR, 'SOEN487_Project.sqlite')
@@ -12,6 +16,8 @@ class Config(object):
     JWT_EXPIRES = datetime.timedelta(days=1)
     SQLALCHEMY_DATABASE_URI = fr'sqlite:///{DB}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    EMAIL = os.getenv('EMAIL')
+    PASSWORD = os.getenv('PASSWORD')
 
 
 class ProdConfig(Config):

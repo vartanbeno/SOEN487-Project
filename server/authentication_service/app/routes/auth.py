@@ -1,5 +1,6 @@
-from flask import Blueprint, request, jsonify
-import json
+import smtplib
+
+from flask import Blueprint, request, current_app
 from sqlalchemy import func
 
 from app import db
@@ -53,6 +54,19 @@ def register():
     db.session.add(verification)
     db.session.commit()
 
+    with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.ehlo()
+
+        smtp.login(current_app.config['EMAIL'], current_app.config['PASSWORD'])
+
+        subject = 'GP Verification'
+        body = f'http://localhost:3000/api/auth/verify?key={verification.key}'
+        message = f'Subject: {subject}\n\n{body}'
+
+        smtp.sendmail(current_app.config['EMAIL'], user.email, message)
+
     return response("Successfully registered. Please verify your account.")
 
 
@@ -83,13 +97,8 @@ def verify():
     If it does, we delete the verification entity from the database, breaking its relationship with its user.
     :return: Response object
     """
-    print('made it to verify')
-
     key = request.args.get('key')
-
-    print('the key is '+str(key))
     verification = Verification.query.filter_by(key=key).first()
-    print(verification)
 
     if verification is not None:
         db.session.delete(verification)
