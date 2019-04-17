@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, make_response, request
 from config import DevConfig
-
+from flask_cors import CORS
 import sqlalchemy
 
 # need an app before we import models because models need it
@@ -9,29 +9,23 @@ from models import db, row2dict, Conversation, Message
 from helpers.jwt import get_data_from_token
 
 app.config.from_object(DevConfig)
+cors = CORS(app)
 
 
 @app.errorhandler(404)
 def page_not_found(e):
     return make_response(jsonify({"code": 404, "msg": "404: Not Found"}), 404)
 
-# @app.route("/test", methods={"GET"})
-# def get_test():
-#     try:
-#         token_data = get_data_from_token()
-#     except Exception:
-#
-#     return
 
 @app.route("/conversation", methods={"GET"})
 def get_conversations():
-    # conversation_list = Conversation.query.all()
-    # token = request.headers.get("Token")
-    # token = get_data_from_token(token)
-    # print(token)
-    # conversation_list = Conversation.query.filter_by(creator=token['id'])
-    # return jsonify([row2dict(conversation) for conversation in conversation_list])
-    return 0;
+    token = request.headers.get('Authorization').split(" ")[1]
+    data = get_data_from_token(token)
+    conversation_list = Conversation.query.filter_by(creator_id=data['sub'])
+    response = jsonify({
+        "conversations": [row2dict(conversation) for conversation in conversation_list]
+    })
+    return make_response(response,200)
 
 
 @app.route("/conversation/<conversation_id>", methods={"GET"})
@@ -61,11 +55,14 @@ def get_messages_with_limit(conversation_id, message_limit):
 
 @app.route("/conversation", methods={"POST"})
 def create_conversation():
-    creator_id = request.get_json().get("creator_id")
-    participant_id = request.get_json().get("participant_id")
-    if not creator_id or not participant_id:
-        return "Missing a creator or an participant"
-    c = Conversation(creator_id=creator_id,participant_id=participant_id)
+    token = request.headers.get('Authorization').split(" ")[1]
+    data = get_data_from_token(token)
+    participant_id = int(request.get_json().get("participant_id"))
+    if not participant_id:
+        return make_response("Missing participant field", 400)
+    print(type(participant_id))
+    print(type(data['sub']))
+    c = Conversation(creator_id=data['sub'], participant_id=participant_id)
     db.session.add(c)
     try:
         db.session.commit()

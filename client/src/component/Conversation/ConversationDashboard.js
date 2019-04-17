@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ConversationContent from './ConversationContent';
-import { Button } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
 import './ConversationDashboard.css'
 
 class ConversationDashBoard extends Component {
@@ -9,7 +9,9 @@ class ConversationDashBoard extends Component {
     super(props);
     this.state = {
       conversations: [],
-      selectedConversation: null
+      selectedConversation: null,
+      showNewConversation: false,
+      participantId: null,
     }
   }
 
@@ -21,26 +23,63 @@ class ConversationDashBoard extends Component {
     fetch('http://localhost:8081/conversation', {
       method: 'GET',
       headers: {
-        'Token': localStorage.getItem('token')
-      }
+        // 'Accept': 'application/json',
+        'Authorization': "Bearer " + localStorage.getItem('token')
+      },
     })
-      .then((r) => {
-        this.setState({ conversations: r.data })
+      .then(r => r.json())
+      .then((data) => {
+        this.setState({ conversations: data.conversations })
       });
   }
 
-  renderConversations = () => {
-    const { conversations } = this.state;
+  onClickNewConversation = () => {
+    this.setState({ showNewConversation: true })
+  }
 
+  onChangeInput = (event) => {
+    this.setState({ participantId: event.target.value })
+  }
+
+  onClickCreateConversation = () => {
+    const { participantId } = this.state;
+    fetch('http://localhost:8081/conversation', {
+      method: 'POST',
+      headers: {
+        'Authorization': "Bearer " + localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        participant_id: participantId
+      })
+    })
+      .then(r => r.json())
+      .then((data) => {
+        this.getConversations();
+      })
+    this.setState({ showNewConversation: false })
+  }
+
+  renderConversations = () => {
+    const { conversations, showNewConversation } = this.state;
+    console.log(conversations)
     return (
       <table>
         <tbody>
           <tr >
-            <th><Button>New conversation</Button></th>
+            {!showNewConversation ? (
+              <th><Button onClick={this.onClickNewConversation}>New conversation</Button></th>
+            ) : (
+                <th>
+                  Id:
+                <Input onChange={this.onChangeInput}></Input>
+                  <Button onClick={this.onClickCreateConversation}>Create Conversation</Button>
+                </th>
+              )}
           </tr>
           {conversations.map(c =>
-            <tr>
-              <th className="conversation-item">my title</th>
+            <tr key={c.id}>
+              <th className="conversation-item">{c.id}</th>
             </tr>
           )}
         </tbody>
