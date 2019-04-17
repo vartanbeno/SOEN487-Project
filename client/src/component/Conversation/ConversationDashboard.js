@@ -21,7 +21,7 @@ class ConversationDashBoard extends Component {
     fetch('http://localhost:8081/conversation', {
       method: 'GET',
       headers: {
-        'Authorization': 'application/json'
+        'Token': localStorage.getItem('token')
       }
     })
       .then((r) => {

@@ -1,6 +1,6 @@
 class Config(object):
     SQLALCHEMY_DATABASE_URI = r"sqlite:///conversations.sqlite"
-    SECRET_KEY="Noodles"
+    JWT_SECRET_KEY = 'teamgiovanniprattico'
 
 
 class ProdConfig(Config):

@@ -5,7 +5,8 @@ import sqlalchemy
 
 # need an app before we import models because models need it
 app = Flask(__name__)
-from models import db, row2dict, User, Conversation, Message
+from models import db, row2dict, Conversation, Message
+from helpers.jwt import get_data_from_token
 
 app.config.from_object(DevConfig)
 
@@ -14,36 +15,23 @@ app.config.from_object(DevConfig)
 def page_not_found(e):
     return make_response(jsonify({"code": 404, "msg": "404: Not Found"}), 404)
 
-
-@app.route("/user", methods={"GET"})
-def get_users():
-    user_list = User.query.all();
-    return jsonify([row2dict(person) for person in user_list])
-
-
-@app.route("/user", methods={"POST"})
-def post_user():
-    username = request.get_json().get('username')
-    if not username:
-        return 'Please enter an username..'
-    u = User(username=username)
-    db.session.add(u)
-    try:
-        db.session.commit()
-    except sqlalchemy.exc.SQLAlchemyError as e:
-        error = "Cannot put person. "
-        print(app.config.get("DEBUG"))
-        if app.config.get("DEBUG"):
-            error += str(e)
-        return make_response(jsonify({"code": 404, "msg": error}), 404)
-
-    return make_response(jsonify({"id":u.id, "username":u.username}), 201)
-
+# @app.route("/test", methods={"GET"})
+# def get_test():
+#     try:
+#         token_data = get_data_from_token()
+#     except Exception:
+#
+#     return
 
 @app.route("/conversation", methods={"GET"})
 def get_conversations():
-    conversation_list = Conversation.query.all()
-    return jsonify([row2dict(conversation) for conversation in conversation_list])
+    # conversation_list = Conversation.query.all()
+    # token = request.headers.get("Token")
+    # token = get_data_from_token(token)
+    # print(token)
+    # conversation_list = Conversation.query.filter_by(creator=token['id'])
+    # return jsonify([row2dict(conversation) for conversation in conversation_list])
+    return 0;
 
 
 @app.route("/conversation/<conversation_id>", methods={"GET"})
