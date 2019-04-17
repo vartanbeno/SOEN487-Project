@@ -25,7 +25,7 @@ def create_app(config):
         return response('Page not found.', 404)
 
     from app.routes.notifications import notifications_api
-
     app.register_blueprint(notifications_api, url_prefix=f'{url_prefix}/notifications')
+
 
     return app

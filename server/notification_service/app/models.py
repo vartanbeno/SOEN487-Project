@@ -1,15 +1,21 @@
 from app import db
 
+def row2dict(row):
+    return {c.name: str(getattr(row, c.name)) for c in row.__table__.columns}
 
-class NotificationType(db.Model):
+class Notification(db.Model):
     id = db.Column(db.Integer, primary_key= True)
-    type = db.Column(db.Text(), nullable= False)
+    senderID = db.Column(db.Integer, nullable=False)
+    receiverID = db.Column(db.Integer, nullable=False)
+    message = db.Column(db.Text(), nullable= True)
 
     def __repr__(self):
-        return "<Type {}>".format(self.type)
+        return "<Message sent by User ID {} to User ID {}>".format(self.senderID, self.receiverID)
 
     def json(self):
         return {
             'id': self.id,
-            'type': self.type
+            'senderID': self.senderID,
+            'receiverID': self.receiverID,
+            'message': self.message
         }

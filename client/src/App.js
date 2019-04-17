@@ -5,6 +5,7 @@ import Landing from './component/Landing';
 import Verify from './component/Verify';
 import Home from './component/Home';
 import ConversationDashboard from './component/Conversation/ConversationDashboard'
+import Notifications from './component/Notifications';
 import {
   BrowserRouter,
   Route,
@@ -25,6 +26,8 @@ class App extends Component {
          <Route path="/register" component={Register}/>
          {/* <Route path="/" component={Landing}/> */}
          <Route path="/conversations" component={ConversationDashboard}/>
+         <Route path="/notifications" component={Notifications}/>
+         {/* <Route path="/" component={Landing}/> */}
         </Switch>
       </BrowserRouter>
     );
