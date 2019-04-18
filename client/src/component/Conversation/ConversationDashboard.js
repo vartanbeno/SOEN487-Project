@@ -4,7 +4,6 @@ import { Button, Input } from 'reactstrap';
 import './ConversationDashboard.css'
 
 class ConversationDashBoard extends Component {
-
   constructor (props) {
     super(props);
     this.state = {
@@ -12,8 +11,10 @@ class ConversationDashBoard extends Component {
       selectedConversation: null,
       showNewConversation: false,
       participantId: null,
+      myId:null,
     }
   }
+  conversationRef = React.createRef();
 
   componentDidMount() {
     this.getConversations();
@@ -29,7 +30,11 @@ class ConversationDashBoard extends Component {
     })
       .then(r => r.json())
       .then((data) => {
-        this.setState({ conversations: data.conversations })
+        console.log(data)
+        this.setState({ 
+          conversations: data.conversations,
+          myId: data.user_id,
+         })
       });
   }
 
@@ -60,9 +65,13 @@ class ConversationDashBoard extends Component {
     this.setState({ showNewConversation: false })
   }
 
+  onClickConversationTab = (conversationId) => {
+    this.setState({selectedConversation: conversationId});
+    this.conversationRef.current.syncMessages(conversationId)
+  }
+
   renderConversations = () => {
-    const { conversations, showNewConversation } = this.state;
-    console.log(conversations)
+    const { conversations, showNewConversation, myId } = this.state;
     return (
       <table>
         <tbody>
@@ -72,14 +81,16 @@ class ConversationDashBoard extends Component {
             ) : (
                 <th>
                   Id:
-                <Input onChange={this.onChangeInput}></Input>
+                  <Input onChange={this.onChangeInput}></Input>
                   <Button onClick={this.onClickCreateConversation}>Create Conversation</Button>
                 </th>
               )}
           </tr>
           {conversations.map(c =>
             <tr key={c.id}>
-              <th className="conversation-item">{c.id}</th>
+              <th className="conversation-item" onClick={() => this.onClickConversationTab(c.id)}>
+                {`Conversation with ${parseInt(c.creator_id) === myId ? c.participant_id : c.creator_id}`}
+              </th>
             </tr>
           )}
         </tbody>
@@ -96,7 +107,7 @@ class ConversationDashBoard extends Component {
           <div className="conversation-list">
             {this.renderConversations()}
           </div>
-          <ConversationContent conversation={selectedConversation} />
+          <ConversationContent conversationId={selectedConversation} ref={this.conversationRef} />
         </div>
       </div>
     )

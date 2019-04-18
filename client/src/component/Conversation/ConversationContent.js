@@ -7,42 +7,52 @@ class ConversationContent extends Component {
     super(props);
     this.state = {
       messages: [],
-      count: 0,
-      conversation: null
+      count: 5,
+      conversation: null,
+      myId: null,
     }
   }
 
-  componentDidMount() {
-    console.log(localStorage.getItem('token'));
-  }
-
-  componentWillReceiveProps() {
-
-  }
-
-  syncMessages = () => {
-    fetch('http://localhost:8081/message/', {
+  syncMessages = (conversationId) => {
+    const { count } = this.state;
+    fetch(`http://localhost:8081/conversation/${conversationId}/${count}`, {
       method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': localStorage.getItem('token')
-      }
+      headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
     })
-      .then((r) => {
-        this.setState({ conversations: r.data })
-      });
+      .then(r => r.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({conversation: data})
+        // console.log(data)
+      })
   }
 
   sendMessage = () => {
+    
+  }
 
+  renderMessages = () => {
+    const { conversation, count } = this.state;
+    return (
+      <React.Fragment>
+        {conversation.messages.map((m,index) => <div key={index}>{m.text}</div>)}
+        {conversation.messages.length < count ? null : <Button>Load more</Button>}
+      </React.Fragment>
+    )
   }
 
   render() {
+    const { conversation } = this.state;
     return (
       <div id="conversation-content">
-        <Input placeholder="Write here"/>
-        <Button onClick={this.sendMessage}>Send</Button>
+        {conversation ? (
+          <React.Fragment>
+            <Input placeholder="Write here" />
+            <Button onClick={this.sendMessage}>Send</Button>
+          </React.Fragment>
+        ) : null}
         <div className="conversation-body">
+          {conversation ? this.renderMessages() : null}
         </div>
       </div>
     )

@@ -44,11 +44,10 @@ class Home extends Component{
         <div className="App">
             <header className="App-header">
             <h1> Microservices are awesome</h1>
-            <row>
-                <button style={{marginRight: 40, background: 'CornflowerBlue', border: 'CornflowerBlue', width: 125, height: 50}}>Send Messages</button>
+            <div>
+                <button onClick={this.goToConversations} style={{marginRight: 40, background: 'CornflowerBlue', border: 'CornflowerBlue', width: 125, height: 50}}>Send Messages</button>
                 <button onClick={this.handleNotifications} style={{background: 'white', border: 'white', width: 105, height: 50}}>Notifications</button>
-                <button onClick={this.goToConversations}>Go to Conversations</button>
-            </row>
+            </div>
             <button style={{marginTop: 20,background: 'green', border: 'green', width: 105, height: 50}} onClick={this.handleLogout}> Logout </button>
         </header>
         </div>
