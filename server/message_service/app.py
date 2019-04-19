@@ -23,6 +23,7 @@ def get_conversations():
     data = get_data_from_token(token)
     conversation_list = Conversation.query.filter_by(creator_id=data['sub'])
     response = jsonify({
+        "user_id": data['sub'],
         "conversations": [row2dict(conversation) for conversation in conversation_list]
     })
     return make_response(response,200)
@@ -42,9 +43,13 @@ def get_messages(conversation_id):
 
 @app.route("/conversation/<conversation_id>/<message_limit>", methods={"GET"})
 def get_messages_with_limit(conversation_id, message_limit):
+    token = request.headers.get('Authorization').split(" ")[1]
+    data = get_data_from_token(token)
     c = Conversation.query.filter_by(id=conversation_id).first()
-    messages = Message.query.with_parent(c).order_by(Message.id.desc()).limit(message_limit).all()
+    # messages = Message.query.with_parent(c).order_by(Message.id.desc()).limit(message_limit).all()
+    messages = Message.query.order_by(Message.id.desc()).filter_by(conversation_id=conversation_id)
     response = jsonify({
+        "user_id": data['sub'],
         "id": c.id,
         "creator_id": c.creator_id,
         "participant_id": c.participant_id,
@@ -81,11 +86,13 @@ def create_conversation():
 
 @app.route("/message", methods={"POST"})
 def post_message():
+    token = request.headers.get('Authorization').split(" ")[1]
+    data = get_data_from_token(token)
     conversation_id = request.get_json().get("conversation_id")
-    sender_id = request.get_json().get("sender_id")
+    sender_id = data['sub']
     text = request.get_json().get("text")
     if not conversation_id or not sender_id or not text:
-        return "Missing body arguments"
+        return make_response("Missing body arguments", 400)
     m = Message(conversation_id=conversation_id, sender_id=sender_id, text=text)
     db.session.add(m)
     try:

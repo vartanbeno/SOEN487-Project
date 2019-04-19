@@ -30,7 +30,6 @@ class ConversationDashBoard extends Component {
     })
       .then(r => r.json())
       .then((data) => {
-        console.log(data)
         this.setState({ 
           conversations: data.conversations,
           myId: data.user_id,

@@ -10,6 +10,8 @@ class ConversationContent extends Component {
       count: 5,
       conversation: null,
       myId: null,
+      conversationId: null,
+      text: '',
     }
   }
 
@@ -21,33 +23,54 @@ class ConversationContent extends Component {
     })
       .then(r => r.json())
       .then((data) => {
-        console.log(data);
-        this.setState({conversation: data})
-        // console.log(data)
+        this.setState({
+          conversation: data,
+          conversationId: conversationId
+        })
       })
   }
 
   sendMessage = () => {
-    
+    const { conversation, text } = this.state;
+    const body = JSON.stringify({
+      conversation_id: conversation.id,
+      text,
+    });
+    fetch(`http://localhost:8081/message`, {
+      method: 'POST',
+      headers:{ 
+        'Authorization': "Bearer " + localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+      body,
+    })
+      .then((r) => {
+        this.setState({text: ''})
+        this.syncMessages(conversation.id)
+      })
+  }
+
+  onChangeInput = (event) => {
+    this.setState({ text: event.target.value })
   }
 
   renderMessages = () => {
     const { conversation, count } = this.state;
     return (
       <React.Fragment>
-        {conversation.messages.map((m,index) => <div key={index}>{m.text}</div>)}
+        {conversation.messages.map((m, index) => <div key={index}>{m.text}</div>)}
         {conversation.messages.length < count ? null : <Button>Load more</Button>}
       </React.Fragment>
     )
   }
 
   render() {
-    const { conversation } = this.state;
+    const { conversation, text } = this.state;
     return (
       <div id="conversation-content">
         {conversation ? (
           <React.Fragment>
-            <Input placeholder="Write here" />
+            <Input placeholder="Write here" onChange={this.onChangeInput} value={text} />
             <Button onClick={this.sendMessage}>Send</Button>
           </React.Fragment>
         ) : null}
