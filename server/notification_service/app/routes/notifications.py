@@ -3,6 +3,7 @@ from flask import jsonify, Blueprint, make_response, request
 from sqlalchemy import exc
 from flask_cors import CORS
 from flask_jwt_simple import jwt_required
+from app.helpers.jwt import get_user_id_from_jwt
 
 from app import models
 from app.helpers.jwt import must_be_authenticated
@@ -23,13 +24,17 @@ def get_by_receiverID(userID):
     return jsonify([models.row2dict(notification) for notification in messages])
 
 @notifications_api.route("/", methods={"PUT"})
+@jwt_required
 def put_notification():
-    senderID = request.form.get('senderID')
+    print("started")
+    senderID = get_user_id_from_jwt()
     print(request.get_json())
 
-    receiverID = request.form.get("receiverID")
-    message = request.form.get("message")
-
+    receiverID = request.get_json().get('receiverID')
+    message = request.get_json().get('message')
+    print(type(senderID))
+    print(type(receiverID))
+    print(type(message))
     if not senderID:
         return make_response(jsonify({"code": 403,"msg": "Cannot put notification. Missing sender ID."}), 403)
     if not receiverID:
@@ -45,6 +50,7 @@ def put_notification():
         models.db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError:
         error = "Cannot put notification."
+        print("SQL error")
         return make_response(jsonify({"code": 404, "msg": error}), 404)
     return jsonify({"code": 200, "msg": "success"})
 

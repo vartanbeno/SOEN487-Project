@@ -23,6 +23,7 @@ class ConversationContent extends Component {
     })
       .then(r => r.json())
       .then((data) => {
+        console.log(data)
         this.setState({
           conversation: data,
           conversationId: conversationId
@@ -31,9 +32,10 @@ class ConversationContent extends Component {
   }
 
   sendMessage = () => {
-    const { conversation, text } = this.state;
+    const { conversation, text, myId } = this.state;
     const body = JSON.stringify({
       conversation_id: conversation.id,
+      receiver_id: myId == conversation.creator_id ? conversation.creator_id : conversation.participant_id,
       text,
     });
     fetch(`http://localhost:8081/message`, {

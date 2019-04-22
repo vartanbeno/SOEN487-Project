@@ -2,6 +2,9 @@ from flask import Flask, jsonify, make_response, request
 from config import DevConfig
 from flask_cors import CORS
 import sqlalchemy
+import requests
+
+
 
 # need an app before we import models because models need it
 app = Flask(__name__)
@@ -89,6 +92,7 @@ def post_message():
     token = request.headers.get('Authorization').split(" ")[1]
     data = get_data_from_token(token)
     conversation_id = request.get_json().get("conversation_id")
+    receiverID = request.get_json().get('receiver_id')
     sender_id = data['sub']
     text = request.get_json().get("text")
     if not conversation_id or not sender_id or not text:
@@ -103,6 +107,13 @@ def post_message():
         if app.config.get("DEBUG"):
             error += str(e)
         return make_response(jsonify({"code": 404, "msg": error}), 404)
+
+    response = requests.put('http://127.0.0.1:8080/api/notifications/',
+                 json={
+                     "receiverID": receiverID,
+                     "message": "You have a new message from {}".format(receiverID)},
+                 headers={'Authorization':request.headers.get('Authorization')})
+    print(response.status_code)
     return make_response(jsonify({
         "id": m.id,
         "conversation_id": m.conversation_id,
