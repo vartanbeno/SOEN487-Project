@@ -2,5 +2,8 @@
     border: solid;
     border-width: 1px;
     height: 500px;
-    overflow: auto;
+    /* overflow: auto; */
+}
+.my-message{
+    text-align:right;
 }

@@ -113,13 +113,23 @@ def post_message():
                      "receiverID": receiverID,
                      "message": "You have a new message from {}".format(receiverID)},
                  headers={'Authorization':request.headers.get('Authorization')})
-    print(response.status_code)
-    return make_response(jsonify({
-        "id": m.id,
-        "conversation_id": m.conversation_id,
-        "sender_id": m.sender_id,
-        "text": m.text
-    }), 201)
+    # print(response.status_code)
+    if response.status_code == 200:
+        return make_response(jsonify({
+            "id": m.id,
+            "conversation_id": m.conversation_id,
+            "sender_id": m.sender_id,
+            "text": m.text
+        }), 201)
+    db.session.delete(m)
+    try:
+        db.session.commit()
+    except sqlalchemy.exc.SQLAlchemyError as e:
+        error = "Cannot put person. "
+        print(app.config.get("DEBUG"))
+        if app.config.get("DEBUG"):
+            error += str(e)
+    return make_response(response.text, response.status_code)
 
 
 @app.route("/message/<message_id>", methods={"DELETE"})

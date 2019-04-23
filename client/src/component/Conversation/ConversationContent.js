@@ -60,7 +60,7 @@ class ConversationContent extends Component {
     const { conversation, count } = this.state;
     return (
       <React.Fragment>
-        {conversation.messages.map((m, index) => <div key={index}>{m.text}</div>)}
+        {conversation.messages.map((m, index) => <div key={index} className={conversation.user_id ==m.sender_id ? "my-message" : "message"}>{m.text}</div>)}
         {conversation.messages.length < count ? null : <Button>Load more</Button>}
       </React.Fragment>
     )
