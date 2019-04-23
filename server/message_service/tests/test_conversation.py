@@ -2,7 +2,6 @@ import unittest
 import json
 import jwt
 import time
-import os
 from app import app as tested_app
 from app import db as tested_db
 from config import TestConfig
