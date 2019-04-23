@@ -1,7 +1,7 @@
 import unittest
 import json
-from main import app as tested_app
-from main import db as tested_db
+from app import app as tested_app
+from app import db as tested_db
 from config import TestConfig
 from models import Message
 
