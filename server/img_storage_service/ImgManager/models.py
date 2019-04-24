@@ -22,16 +22,16 @@ class Client(db.Model, UserMixin):
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=False, nullable=False)
-    client_id = db.Column(db.Integer, db.ForeignKey('Client.id'), nullable=False)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=False)
 
     def __repr__(self):
         return "<Album {}: {}, {}>".format(self.id, self.name, self.client_id)
 
 
-class Image(db.Model):
+class Img(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=False)
     path = db.Column(db.String(20), nullable=False, default='default.jpg')
 
     def __repr__(self):
-        return "<Album {}: {}, {}>".format(self.id, self.album_id, self.path)
+        return "<Image {}: {}, {}>".format(self.id, self.album_id, self.path)
