@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ConversationContent from './ConversationContent';
-import { Button, Input } from 'reactstrap';
+import { Button, Input, Row } from 'reactstrap';
 import './ConversationDashboard.css'
 
 class ConversationDashBoard extends Component {
@@ -16,6 +16,7 @@ class ConversationDashBoard extends Component {
 
 
     this.checkAuthenticated();
+    this.backToHome = this.backToHome.bind(this);
 
   }
   conversationRef = React.createRef();
@@ -83,6 +84,11 @@ class ConversationDashBoard extends Component {
     this.conversationRef.current.syncMessages(conversationId)
   }
 
+  backToHome(){
+
+    this.props.history.push(`/`);
+  }
+
   renderConversations = () => {
     const { conversations, showNewConversation, myId } = this.state;
     return (
@@ -116,6 +122,9 @@ class ConversationDashBoard extends Component {
     return (
       <div id="conversations">
         <h1>Conversations</h1>
+        <button onClick={this.backToHome}>Back to Home</button> 
+        <br />
+        <br/>
         <div className="container">
           <div className="conversation-list">
             {this.renderConversations()}
