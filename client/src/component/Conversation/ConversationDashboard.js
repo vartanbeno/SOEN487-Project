@@ -13,8 +13,22 @@ class ConversationDashBoard extends Component {
       participantId: null,
       myId:null,
     }
+
+
+    this.checkAuthenticated();
+
   }
   conversationRef = React.createRef();
+
+  checkAuthenticated(){
+
+      if (!localStorage.getItem('token')){
+          
+          this.props.history.push(`/`);
+      }
+          
+
+  }
 
   componentDidMount() {
     this.getConversations();
