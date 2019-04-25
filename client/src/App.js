@@ -26,7 +26,7 @@ class App extends Component {
          <Route path="/register" component={Register}/>
          <Route path="/conversations" component={ConversationDashboard}/>
          <Route path="/notifications" component={Notifications}/>
-         {/* <Route path="/" component={Landing}/> */}
+         <Route path="/" component={Landing}/>
         </Switch>
       </BrowserRouter>
     );
