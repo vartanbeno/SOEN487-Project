@@ -8,8 +8,9 @@ import requests
 
 # need an app before we import models because models need it
 app = Flask(__name__)
-from models import db, row2dict, Conversation, Message
 from helpers.jwt import get_data_from_token
+import models
+
 
 app.config.from_object(DevConfig)
 cors = CORS(app)
@@ -24,17 +25,17 @@ def page_not_found(e):
 def get_conversations():
     token = request.headers.get('Authorization').split(" ")[1]
     data = get_data_from_token(token)
-    conversation_list = Conversation.query.filter_by(creator_id=data['sub'])
+    conversation_list = models.Conversation.query.filter_by(creator_id=data['sub'])
     response = jsonify({
         "user_id": data['sub'],
-        "conversations": [row2dict(conversation) for conversation in conversation_list]
+        "conversations": [models.row2dict(conversation) for conversation in conversation_list]
     })
     return make_response(response,200)
 
 
 @app.route("/conversation/<conversation_id>", methods={"GET"})
 def get_messages(conversation_id):
-    c = Conversation.query.filter_by(id=conversation_id).first()
+    c = models.Conversation.query.filter_by(id=conversation_id).first()
     response = jsonify({
         "id": c.id,
         "creator_id": c.creator_id,
@@ -48,15 +49,15 @@ def get_messages(conversation_id):
 def get_messages_with_limit(conversation_id, message_limit):
     token = request.headers.get('Authorization').split(" ")[1]
     data = get_data_from_token(token)
-    c = Conversation.query.filter_by(id=conversation_id).first()
+    c = models.Conversation.query.filter_by(id=conversation_id).first()
     # messages = Message.query.with_parent(c).order_by(Message.id.desc()).limit(message_limit).all()
-    messages = Message.query.order_by(Message.id.desc()).filter_by(conversation_id=conversation_id)
+    messages = models.Message.query.order_by(models.Message.id.desc()).filter_by(conversation_id=conversation_id)
     response = jsonify({
         "user_id": data['sub'],
         "id": c.id,
         "creator_id": c.creator_id,
         "participant_id": c.participant_id,
-        "messages": [row2dict(m) for m in messages]
+        "messages": [models.row2dict(m) for m in messages]
     })
     return make_response(response, 200)
 
@@ -70,10 +71,10 @@ def create_conversation():
         return make_response("Missing participant field", 400)
     print(type(participant_id))
     print(type(data['sub']))
-    c = Conversation(creator_id=data['sub'], participant_id=participant_id)
-    db.session.add(c)
+    c = models.Conversation(creator_id=data['sub'], participant_id=participant_id)
+    models.db.session.add(c)
     try:
-        db.session.commit()
+        models.db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError as e:
         error = "Cannot put person. "
         print(app.config.get("DEBUG"))
@@ -97,10 +98,10 @@ def post_message():
     text = request.get_json().get("text")
     if not conversation_id or not sender_id or not text:
         return make_response("Missing body arguments", 400)
-    m = Message(conversation_id=conversation_id, sender_id=sender_id, text=text)
-    db.session.add(m)
+    m = models.Message(conversation_id=conversation_id, sender_id=sender_id, text=text)
+    models.db.session.add(m)
     try:
-        db.session.commit()
+        models.db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError as e:
         error = "Cannot put person. "
         print(app.config.get("DEBUG"))
@@ -121,9 +122,9 @@ def post_message():
             "sender_id": m.sender_id,
             "text": m.text
         }), 201)
-    db.session.delete(m)
+    models.db.session.delete(m)
     try:
-        db.session.commit()
+        models.db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError as e:
         error = "Cannot put person. "
         print(app.config.get("DEBUG"))
@@ -134,10 +135,10 @@ def post_message():
 
 @app.route("/message/<message_id>", methods={"DELETE"})
 def delete_message(message_id):
-    m = Message.query.filter_by(id=message_id).first()
-    db.session.delete(m)
+    m = models.Message.query.filter_by(id=message_id).first()
+    models.db.session.delete(m)
     try:
-        db.session.commit()
+        models.db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError as e:
         error = "Cannot put person. "
         print(app.config.get("DEBUG"))

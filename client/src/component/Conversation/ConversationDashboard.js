@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ConversationContent from './ConversationContent';
-import { Button, Input } from 'reactstrap';
+import { Button, Input, Row } from 'reactstrap';
 import './ConversationDashboard.css'
 
 class ConversationDashBoard extends Component {
@@ -13,8 +13,23 @@ class ConversationDashBoard extends Component {
       participantId: null,
       myId:null,
     }
+
+
+    this.checkAuthenticated();
+    this.backToHome = this.backToHome.bind(this);
+
   }
   conversationRef = React.createRef();
+
+  checkAuthenticated(){
+
+      if (!localStorage.getItem('token')){
+          
+          this.props.history.push(`/`);
+      }
+          
+
+  }
 
   componentDidMount() {
     this.getConversations();
@@ -69,6 +84,11 @@ class ConversationDashBoard extends Component {
     this.conversationRef.current.syncMessages(conversationId)
   }
 
+  backToHome(){
+
+    this.props.history.push(`/home`);
+  }
+
   renderConversations = () => {
     const { conversations, showNewConversation, myId } = this.state;
     return (
@@ -102,6 +122,9 @@ class ConversationDashBoard extends Component {
     return (
       <div id="conversations">
         <h1>Conversations</h1>
+        <button onClick={this.backToHome}>Back to Home</button> 
+        <br />
+        <br/>
         <div className="container">
           <div className="conversation-list">
             {this.renderConversations()}
