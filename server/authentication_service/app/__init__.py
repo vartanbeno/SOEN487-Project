@@ -28,7 +28,9 @@ def create_app(config):
         return response('Page not found.', 404)
 
     from app.routes.auth import auth_api
+    from app.routes.user import user_api
 
     app.register_blueprint(auth_api, url_prefix=f'{url_prefix}/auth')
+    app.register_blueprint(user_api, url_prefix=f'{url_prefix}/user')
 
     return app

@@ -207,3 +207,4 @@ fabric.properties
 # User specified
 *.sqlite
 .env
+.DS_STORE
