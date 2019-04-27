@@ -2,7 +2,7 @@
 
 This repository is for the SOEN 487 final project at Concordia University. You can find details about the contributors [here](https://github.com/vartanbeno/SOEN487-Project/wiki).
 
-The project is a full stack microservices application for sending and receiving messages between users. Our project is broken doen into 3 services:
+The project is a full stack microservices application for sending and receiving messages between users. Our project is broken down into 3 services:
 
  - Authentication Service
  - Notification Service
