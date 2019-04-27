@@ -8,4 +8,25 @@ services:
     image: gp-client
     container_name: gp-client
     ports:
-    - "50000:80"
+      - "50000:80"
+
+  authentication-service:
+    build: ./server/authentication_service
+    image: gp-authentication-service
+    container_name: gp-authentication-service
+    ports:
+      - "50001:5000"
+
+  messaging-service:
+    build: ./server/messaging_service
+    image: gp-messaging-service
+    container_name: gp-messaging-service
+    ports:
+      - "50002:8081"
+
+  notification-service:
+    build: ./server/notification_service
+    image: gp-notification-service
+    container_name: gp-notification-service
+    ports:
+      - "50003:8080"

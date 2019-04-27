@@ -56,7 +56,7 @@ class Register extends Component {
 
     postRegister(){
 
-        fetch('http://localhost:5000/api/auth/register', {
+        fetch('http://localhost:50001/api/auth/register', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
