@@ -1,13 +1,10 @@
 from app import db
 
-def row2dict(row):
-    return {c.name: str(getattr(row, c.name)) for c in row.__table__.columns}
-
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key= True)
     senderID = db.Column(db.Integer, nullable=False)
     receiverID = db.Column(db.Integer, nullable=False)
-    message = db.Column(db.Text(), nullable= True)
+    message = db.Column(db.Text, nullable= True)
 
     def __repr__(self):
         return "<Message sent by User ID {} to User ID {}>".format(self.senderID, self.receiverID)

@@ -1,7 +1,7 @@
 from flask_jwt_simple import get_jwt, jwt_required
 
-from app import jwt
-from app.helpers.response import response
+from notification_service import jwt
+from notification_service.helpers.response import response
 
 
 def get_user_id_from_jwt():
