@@ -7,4 +7,4 @@ if __name__ == '__main__':
     with app.test_request_context():
         db.create_all()
 
-    app.run(port=8081)
+    app.run(host='0.0.0.0', port=8081)
