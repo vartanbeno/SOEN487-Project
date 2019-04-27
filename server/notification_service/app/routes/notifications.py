@@ -12,7 +12,7 @@ notifications_api = Blueprint('notifications_api', __name__)
 
 CORS(notifications_api)
 
-@notifications_api.route("/")
+@notifications_api.route("")
 @jwt_required
 def get_all_notifications():
     n_list = models.Notification.query.all()
@@ -23,7 +23,7 @@ def get_by_receiverID(userID):
     messages = models.Notification.query.filter_by(receiverID = userID)
     return jsonify([models.row2dict(notification) for notification in messages])
 
-@notifications_api.route("/", methods={"PUT"})
+@notifications_api.route("", methods={"PUT"})
 @jwt_required
 def put_notification():
     print("started")
@@ -66,9 +66,6 @@ def delete_notification(n_id):
     try:
         models.db.session.commit()
     except sqlalchemy.exc.SQLAlchemyError as e:
-        error = "Cannot delete notification. "
-        print(app.config.get("DEBUG"))
-        if app.config.get("DEBUG"):
-            error += str(e)
+        error = "Cannot delete notification."
         return make_response(jsonify({"code": 404, "msg": error}), 404)
     return jsonify({"code": 200, "msg": "success"})

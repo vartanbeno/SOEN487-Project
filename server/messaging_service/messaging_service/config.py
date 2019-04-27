@@ -1,5 +1,5 @@
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = r"sqlite:///conversations.sqlite"
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///conversations.sqlite'
     JWT_SECRET_KEY = 'teamgiovanniprattico'
 
 
@@ -13,4 +13,4 @@ class DevConfig(Config):
 
 class TestConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = r"sqlite:///tests/test_SOEN487_A1.sqlite"
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///tests/test_SOEN487_A1.sqlite'
