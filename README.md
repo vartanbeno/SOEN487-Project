@@ -4,9 +4,9 @@ This repository is for the SOEN 487 final project at Concordia University. You c
 
 The project is a full stack microservices application for sending and receiving messages between users. Our project is broken down into 3 services:
 
-- Authentication service
-- Messaging service
-- Notification service
+- Authentication service, served on http://vartanbeno.com:50001
+- Messaging service, served on http://vartanbeno.com:50002
+- Notification service, served on http://vartanbeno.com:50003
 
 The project is currently hosted [here](http://vartanbeno.com:50000/), but it is highly encouraged to read the full [project report](Project%20Report.pdf) before trying it out.
  
