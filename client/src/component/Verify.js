@@ -30,8 +30,8 @@ class Verify extends Component {
       })
       .then(response => response.json())
       .then(data => data.message)
-      .then(message => console.log(message))
-      .catch(error => console.error("Inside register promise: " + error));
+      .then(message => alert('success! Your account has been verified'))
+      .catch(error => alert('Error verifying your account '+ error));
 
     }
 
