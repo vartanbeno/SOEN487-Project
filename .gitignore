@@ -213,3 +213,4 @@ server/notification_service/.idea/*
 
 server/message_service/.idea/*
 .env
+.DS_STORE
