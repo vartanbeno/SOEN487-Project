@@ -30,11 +30,12 @@ def get_messages(conversation_id):
     user_id = get_user_id_from_jwt()
     conversation = Conversation.query.filter_by(id=conversation_id).first()
 
-    if conversation is None or user_id != conversation.creator_id or user_id != conversation.participant_id:
+    if conversation is None or (user_id != conversation.creator_id and user_id != conversation.participant_id):
         return response('You are not part of this conversation.', 400)
 
-    messages = Message.query.filter_by(conversation_id=conversation.id)
-    return jsonify(m.json() for m in messages)
+    messages = list(Message.query.filter_by(conversation_id=conversation.id))
+    messages.reverse()
+    return jsonify([m.json() for m in messages])
 
 
 @conversation_api.route('<int:conversation_id>/limit/<int:message_limit>', methods=['GET'])
@@ -46,8 +47,9 @@ def get_messages_with_limit(conversation_id, message_limit):
     if conversation is None or (user_id != conversation.creator_id and user_id != conversation.participant_id):
         return response('You are not part of this conversation.', 400)
 
-    messages = Message.query.filter_by(conversation_id=conversation.id).limit(message_limit)
-    return jsonify(m.json() for m in messages)
+    messages = list(Message.query.filter_by(conversation_id=conversation.id))
+    messages.reverse()
+    return jsonify([m.json() for m in messages[:message_limit]])
 
 
 @conversation_api.route('', methods=['POST'])

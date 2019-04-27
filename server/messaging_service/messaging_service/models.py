@@ -32,6 +32,5 @@ class Message(db.Model):
             'id': self.id,
             'sender_id': self.sender_id,
             'created_at': self.created_at,
-            'text': self.text,
-            'conversation': self.conversation.json()
+            'text': self.text
         }
