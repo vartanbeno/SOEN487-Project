@@ -51,7 +51,7 @@ If you are a new user, navigate the UI to register. Enter a valid email address,
 
 ## Step 3: Messaging
 
-At the current time of writing, the UI for the messaging service is incomplete. This is because the messaging service was not made compatible with the rest of the project and so much effort was put to get those services working, instead of the UI. The messaging service endpoints are still functional however, and we invite you to test them with [postman](https://www.getpostman.com/downloads/). The endpoints are defined in the [project report](Project%20Report.pdf).
+At the current time of writing, the UI for the messaging service is incomplete. This is because the messaging service was not made compatible with the rest of the project and so much effort was put to get those services working, instead of the UI. The messaging service endpoints are still functional however, and we invite you to test them with [Postman](https://www.getpostman.com/downloads/). The endpoints are defined in the [project report](Project%20Report.pdf). There are some endpoints to retrieve the list of users and your conversations, which might be useful to make requests on Postman.
 
 ## Step 4: Notifications
 
