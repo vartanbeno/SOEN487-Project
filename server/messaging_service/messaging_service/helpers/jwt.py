@@ -1,7 +1,7 @@
 from flask_jwt_simple import get_jwt, jwt_required
 
-from app import jwt
-from app.helpers.response import response
+from messaging_service import jwt
+from messaging_service.helpers.response import response
 
 
 def get_user_id_from_jwt():
@@ -24,3 +24,13 @@ def must_be_authenticated():
 @jwt.expired_token_loader
 def notify_token_expired():
     return response('Your authentication token has expired.', 401)
+
+
+def get_token_from_authorization_header(request):
+    return request.headers.get('Authorization').split()[1]
+
+
+def get_authorization_header(token):
+    return {
+        'Authorization': f'Bearer {token}'
+    }

@@ -12,22 +12,18 @@ class Notifications extends Component{
     }
 
     checkAuthenticated(){
-
         if(!localStorage.getItem('token')){
-
             this.props.history.push(`/`);
         }
-
     }
 
     componentDidMount(){
-
-        fetch('http://localhost:8080/api/notifications/', {
+        fetch('http://localhost:8080/api/notifications', {
             method: 'GET',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+localStorage.getItem('token')
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
       })
       .then(response => response.json())
@@ -38,15 +34,14 @@ class Notifications extends Component{
         const { array } = this.state;
         return (
             <div>
-            <h1> You have many Notifications.</h1>
-            <ul>
-            {array.map(array =>
-                <li key={array.id}>
-                    <p>Message from {array.senderID} to {array.receiverID}</p>
-                </li>
-                )}
-            </ul>
-
+                <h1>You have {array.length} notification(s).</h1>
+                <ul>
+                {array.map(notification =>
+                    <li key={notification.id}>
+                        <p>{notification.message}</p>
+                    </li>
+                    )}
+                </ul>
             </div>
 
     )}

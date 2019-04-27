@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_jwt_simple import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 
-from app.helpers.response import response
+from messaging_service.helpers.response import response
 
 db = SQLAlchemy()
 jwt = JWTManager()
@@ -24,8 +24,10 @@ def create_app(config):
     def page_not_found(e):
         return response('Page not found.', 404)
 
-    from app.routes.notifications import notifications_api
-    app.register_blueprint(notifications_api, url_prefix=f'{url_prefix}/notifications')
+    from messaging_service.routes.conversation import conversation_api
+    from messaging_service.routes.message import message_api
 
+    app.register_blueprint(conversation_api, url_prefix=f'{url_prefix}/conversation')
+    app.register_blueprint(message_api, url_prefix=f'{url_prefix}/message')
 
     return app
