@@ -1,0 +1,11 @@
+---
+version: "3.4"
+
+services:
+
+  client:
+    build: ./client
+    image: gp-client
+    container_name: gp-client
+    ports:
+    - "50000:80"
