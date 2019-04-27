@@ -4,17 +4,24 @@ from app.helpers.jwt import must_be_authenticated
 from app.helpers.response import response
 from app.models import User
 
+from flask_cors import CORS
+from flask_jwt_simple import jwt_required
+
 user_api = Blueprint('user_api', __name__)
-user_api.before_request(must_be_authenticated)
+#user_api.before_request(must_be_authenticated)
+
+CORS(user_api)
 
 
 @user_api.route('', methods=['GET'])
+@jwt_required
 def get_all_users():
     users = User.query.all()
     return jsonify([user.json() for user in users])
 
 
 @user_api.route('/<int:user_id>', methods=['GET'])
+@jwt_required
 def get_user_by_id(user_id):
     user = User.query.filter_by(id=user_id).first()
     if user is None:
@@ -24,6 +31,7 @@ def get_user_by_id(user_id):
 
 
 @user_api.route('/filter', methods=['GET'])
+@jwt_required
 def filter_users_by_username():
     """
     Get list of users whose username contains the username request parameter (?username=[username]).
