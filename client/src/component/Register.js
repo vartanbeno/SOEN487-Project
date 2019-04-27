@@ -71,7 +71,7 @@ class Register extends Component {
       .then(response => response.json())
       .then(data => data.message)
       .then(message => console.log(message))
-      .then(alert('Verify your account by sending a POST with your key to /verify'))
+      .then(alert('Verify your account by checking your emails!'))
       .then(this.props.history.push(`/`))
       .catch(error => console.error("Inside register promise: " + error));
 

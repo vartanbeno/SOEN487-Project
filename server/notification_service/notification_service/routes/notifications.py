@@ -19,7 +19,7 @@ def get_all_notifications():
 
 @notifications_api.route('', methods=['POST'])
 @jwt_required
-def put_notification():
+def create_notification():
     request_body = request.get_json()
     senderID = get_user_id_from_jwt()
 
@@ -29,6 +29,9 @@ def put_notification():
     except (ValueError, KeyError):
         return response('You must provide both receiver id and a message for your notification.', 400)
 
+    if senderID == receiverID:
+        return response('You cannot create a notification for yourself.', 400)
+
     notification = Notification(senderID=senderID, receiverID=receiverID, message=message)
     db.session.add(notification)
     db.session.commit()
@@ -36,6 +39,7 @@ def put_notification():
     return response('Successfully sent notification.')
 
 @notifications_api.route('/<int:notification_id>', methods=['DELETE'])
+@jwt_required
 def delete_notification(notification_id):
     notification = Notification.query.filter_by(id=notification_id).first()
 

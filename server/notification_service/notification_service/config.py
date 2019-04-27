@@ -13,4 +13,4 @@ class DevConfig(Config):
 
 class TestConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = r"sqlite:///tests/test_notification_microservice.sqlite"
+    SQLALCHEMY_DATABASE_URI = r"sqlite:///test_notification_microservice.sqlite"
