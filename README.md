@@ -100,7 +100,7 @@ This repository has class diagrams for each service, as well as their respective
 - Powerpoint presentation
 
 ## Known Issues
-Notification tests need to be changed so they grab token from the UI service before making the tests
+Notification tests need to be changed so they grab the token from the authentication service before making the tests
 
 ## Other Comments
 - The UI for the messaging service was not implemented because it required additional work to function. We we're having CORS issues with the backend, and then further work was required to message users by name instead of ID.
