@@ -4,9 +4,11 @@ This repository is for the SOEN 487 final project at Concordia University. You c
 
 The project is a full stack microservices application for sending and receiving messages between users. Our project is broken down into 3 services:
 
- - Authentication Service
- - Messaging Service
- - Notification Service
+- Authentication service
+- Messaging service
+- Notification service
+
+The project is currently hosted [here](http://vartanbeno.com:50000/), but it is highly encouraged to read the full [project report](Project%20Report.pdf) before trying it out.
  
 # Getting Started
 
@@ -74,10 +76,11 @@ This repository has class diagrams for each service, as well as their respective
 ## Task Breakdown
 
 #### Giovanni Prattico
+
 - Login UI, Register UI, Verification UI
-- Notification Service
-- Notification Service testing
-- Documentation, ReadME documentation
+- Notification service
+- Notification service testing
+- Documentation, README documentation
 - Services integration debugging
 
 #### Andres Zegarra
@@ -90,14 +93,16 @@ This repository has class diagrams for each service, as well as their respective
 #### Vartan Benohanian
 
 - Authentication service
+- Authentication service testing
 - Frontend debugging
 - Project hosting
 - JWT implementation across all services
 - Notification service tweaks
 - Refactoring of messaging service
-- Documentation, ReadMe Documentation
+- Documentation, README Documentation
 
 #### Joel Senecal
+
 - Image storing service
 - Image storing service testing
 - Powerpoint presentation
@@ -108,8 +113,8 @@ Notification tests need to be changed so they grab the token from the authentica
 
 ## Other Comments
 
-- The UI for the messaging service was not implemented because it required additional work to function. We we're having CORS issues with the backend, and then further work was required to message users by name instead of ID.
-- The image storing service was not implemented. The service would've required UI to interact with.
+- The UI for the messaging service was not implemented because we were having CORS issues between the client and server. For a user to start a conversation, we were recquiring the receiver's user ID, which isn't intuitive, so we decided to scrap it.
+- The image storing service was not implemented. The service would've required for it to communicate with the messaging service, but that wasn't accounted for.
 
 ## License
 
