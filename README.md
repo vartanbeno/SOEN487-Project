@@ -47,7 +47,7 @@ After running all the services and frontend, navigate to [http://localhost:3000/
 
 ## Step 2: Registering, Verifying, and Logging In
 
-If you are a new user, navigate the UI to register. Enter a valid email address, username and password. You will be sent a verification email within 3 minutes. Navigate to your emails, click the link in the email, and you will be verified! Proceed to login.
+If you are a new user, navigate the UI to register. Enter a valid email address, username and password. You will be sent a verification right away (though sometimes it can take a couple minutes). Navigate to your emails, click the link in the email, and you will be verified! Proceed to login.
 
 ## Step 3: Messaging
 
@@ -55,7 +55,7 @@ At the current time of writing, the UI for the messaging service is incomplete. 
 
 ## Step 4: Notifications
 
-You'll notice after sending some messages with postman, that notifications will have been created.
+You'll notice after sending some messages with Postman, the notifications will have been created. There is a notifications section on the UI where you can see all of your notifications.
 
 # Documentation
 
