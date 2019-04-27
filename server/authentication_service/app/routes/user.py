@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 
-from app.helpers.jwt import must_be_authenticated
+
 from app.helpers.response import response
 from app.models import User
 
@@ -8,7 +8,7 @@ from flask_cors import CORS
 from flask_jwt_simple import jwt_required
 
 user_api = Blueprint('user_api', __name__)
-#user_api.before_request(must_be_authenticated)
+
 
 CORS(user_api)
 

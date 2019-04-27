@@ -5,7 +5,7 @@ from flask_cors import CORS
 from flask_jwt_simple import jwt_required
 
 from app import models
-from app.helpers.jwt import must_be_authenticated
+
 
 notifications_api = Blueprint('notifications_api', __name__)
 
@@ -18,11 +18,13 @@ def get_all_notifications():
     return jsonify([models.row2dict(notification) for notification in n_list])
 
 @notifications_api.route("/user/<userID>", methods={"GET"})
+@jwt_required
 def get_by_receiverID(userID):
     messages = models.Notification.query.filter_by(receiverID = userID)
     return jsonify([models.row2dict(notification) for notification in messages])
 
 @notifications_api.route("/", methods={"PUT"})
+@jwt_required
 def put_notification():
     senderID = request.form.get('senderID')
     print(request.get_json())
@@ -49,6 +51,7 @@ def put_notification():
     return jsonify({"code": 200, "msg": "success"})
 
 @notifications_api.route("/<n_id>", methods={"DELETE"})
+@jwt_required
 def delete_notification(n_id):
     notification = models.Notification.query.filter_by(id = n_id).first()
 
