@@ -1,5 +1,7 @@
 # API Descriptions
 
+**IMPORTANT:** These API endpoints are from the beginning of the semester. Most of them have been updated. The updated version of our API is outlined in the [project report](Project%20Report.pdf).
+
 ### Authentication
 
 | Method | HTTP request | Description | Body parameters |
